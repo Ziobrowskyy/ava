@@ -33,6 +33,9 @@ pipeline {
                 sh "git config user.email thomas.ziobrowski@gmail.com"
                 sh "git config user.name Ziobrowskyy"
                 script {
+                    echo "token"
+                    echo "${params.TOKEN}"
+                    echo params.TOKEN.equals("")
                     if(params.TOKEN.equals("")) {
                         echo "Using .env file token"
                         load "$JENKINS_HOME/.env"
