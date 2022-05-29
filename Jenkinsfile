@@ -12,7 +12,7 @@ pipeline {
         }
         stage("Test") {
             steps {
-                sh "docker build --target test -t ava/test:latest ."
+                sh "docker build --no-cache --target test -t ava/test:latest ."
                 sh "docker run ava/test:latest"
             }
         }
