@@ -32,11 +32,13 @@ pipeline {
             steps {
                 sh "git config user.email thomas.ziobrowski@gmail.com"
                 sh "git config user.name Ziobrowskyy"
-                if(params.NPM_TOKEN == "") {
-                    load "$JENKINS_HOME/.env"
-                    sh "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> ~/.npmrc"
-                } else {
-                    sh "echo '//registry.npmjs.org/:_authToken=${params.NPM_TOKEN}' >> ~/.npmrc"
+                script {
+                    if(params.NPM_TOKEN == "") {
+                        load "$JENKINS_HOME/.env"
+                        sh "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> ~/.npmrc"
+                    } else {
+                        sh "echo '//registry.npmjs.org/:_authToken=${params.NPM_TOKEN}' >> ~/.npmrc"
+                    }
                 }
                 sh "npm version ${params.VERSION_MAJOR}.${params.VERSION_MINOR}.${BUILD_NUMBER}"
                 sh "npm publish --access public"
