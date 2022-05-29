@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage("Build") {
             steps {
-                sh "docker build --target build -t ava/build ."
+                sh "docker build --target build:latest -t ava/build ."
             }
         }
         stage("Test") {
             steps {
-                sh "docker build --target test -t ava/test ."
+                sh "docker build --target test:latest -t ava/test ."
                 sh "docker run test"
             }
         }
