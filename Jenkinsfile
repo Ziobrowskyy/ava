@@ -43,7 +43,7 @@ pipeline {
                     }
                 }
                 sh "npm version ${params.VERSION_MAJOR}.${params.VERSION_MINOR}.${BUILD_NUMBER}"
-                sh "npm publish --access public --dry-run"
+                sh "npm publish --access public"
             }
         }
     }
