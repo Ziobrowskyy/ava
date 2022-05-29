@@ -32,7 +32,7 @@ pipeline {
             steps {
                 sh "git config user.email thomas.ziobrowski@gmail.com"
                 sh "git config user.name Ziobrowskyy"
-                if(${params.NPM_TOKEN} == "") {
+                if(params.NPM_TOKEN == "") {
                     load "$JENKINS_HOME/.env"
                     sh "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> ~/.npmrc"
                 } else {
