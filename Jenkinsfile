@@ -18,10 +18,11 @@ pipeline {
             }
         }
 
-        stage("Deploy") {
-            steps {
-            }
-        }
+        // stage("Deploy") {
+        //     steps {
+        //         echo "Deploy"
+        //     }
+        // }
 
         stage("Publish") {
             agent {
