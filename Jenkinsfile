@@ -21,7 +21,7 @@ pipeline {
                 }
             }
             steps {
-                sh "$JENKINS_HOME/.env"
+                load "$JENKINS_HOME/.env"
                 sh 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc'
                 sh 'npm publish'
             }
