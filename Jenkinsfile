@@ -21,7 +21,7 @@ pipeline {
 
         stage("Publish") {
             when {
-                enviroment name: PUBLISH, value: true
+                enviroment(name: PUBLISH, value: true)
             }
             agent {
                 docker {
