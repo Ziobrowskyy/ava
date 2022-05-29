@@ -4,6 +4,7 @@ pipeline {
         booleanParam(name: "PUBLISH", defaultValue: true, description: "Check to publish build to npm")
         string(name: "VERSION_MAJOR", defaultValue: "1", description: "Major version of build to be published")
         string(name: "VERSION_MINOR", defaultValue: "0", description: "Minor version of build to be published")
+        password(name: "NPM_TOKEN", defaultValue: "", description: "Provide npm access token, else one in .env file is used")
     }
     stages {
         stage("Build") {
@@ -31,8 +32,12 @@ pipeline {
             steps {
                 sh "git config user.email thomas.ziobrowski@gmail.com"
                 sh "git config user.name Ziobrowskyy"
-                load "$JENKINS_HOME/.env"
-                sh "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> ~/.npmrc"
+                if(params.NPM_TOKEN == "") {
+                    load "$JENKINS_HOME/.env"
+                    sh "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> ~/.npmrc"
+                } else {
+                    sh "echo '//registry.npmjs.org/:_authToken=${params.NPM_TOKEN}' >> ~/.npmrc"
+                }
                 sh "npm version ${params.VERSION_MAJOR}.${params.VERSION_MINOR}.${BUILD_NUMBER}"
                 sh "npm publish --access public"
             }
