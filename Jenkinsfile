@@ -1,8 +1,7 @@
 pipeline {
-
+    agent any
     stages {
         stage("test") {
-            agent any
             steps {
                 sh "docker build --target build -t ava/build"
             }
