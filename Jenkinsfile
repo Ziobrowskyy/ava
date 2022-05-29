@@ -1,29 +1,36 @@
 pipeline {
-    agent any
+
     stages {
+        stage("test") {
+            agent any
+            steps {
+                sh "docker build --target build -t ava/build"
+            }
+        }
         stage("Build") {
             steps {
-                echo "Stage: Build"
                 sh "docker build --target build /var/jenkins_home"
             }
         }
 
         stage("Test") {
             steps {
-                echo "Stage: Test"
                 sh "docker build --target test /var/jenkins_home"
             }
         }
 
         stage("Deploy") {
             steps {
-                echo "Stage: Deploy"
             }
         }
 
         stage("Publish") {
+            agent {
+                docker {
+                    image "build:lastest"
+                }
+            }
             steps {
-                echo "Stage: Publish"
             }
         }
     }
