@@ -36,7 +36,7 @@ pipeline {
                     if(params.TOKEN.equals("")) {
                         echo "Using .env file token"
                         load "$JENKINS_HOME/.env"
-                        sh "echo '//registry.npmjs.org/:_authToken=${TOKEN}' >> ~/.npmrc"
+                        sh "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> ~/.npmrc"
                     } else {
                         echo "Using param token"
                         sh "echo '//registry.npmjs.org/:_authToken=${params.TOKEN}' >> ~/.npmrc"
