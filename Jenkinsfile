@@ -30,7 +30,7 @@ pipeline {
                 load "$JENKINS_HOME/.env"
                 sh "echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> ~/.npmrc"
                 sh "npm version ${params.VERSION_MAJOR}.${params.VERSION_MINOR}.${BUILD_NUMBER}"
-                sh "npm publish"
+                sh "npm publish --access public"
             }
         }
     }
