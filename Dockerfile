@@ -1,5 +1,5 @@
 FROM node:latest AS build
-RUN git clone https://github.com/avajs/ava.git
+RUN git clone https://github.com/Ziobrowskyy/ava.git
 WORKDIR /ava
 RUN npm install
 

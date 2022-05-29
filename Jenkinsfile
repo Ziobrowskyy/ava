@@ -1,37 +1,29 @@
 pipeline {
     agent any
     stages {
-        stage("test") {
+        stage("Build") {
             steps {
                 sh "docker build --target build -t ava/build ."
             }
         }
-        stage("Build") {
-            steps {
-                sh "docker build --target build /var/jenkins_home"
-            }
-        }
-
         stage("Test") {
             steps {
-                sh "docker build --target test /var/jenkins_home"
+                sh "docker build --target test ava/test ."
+                sh "docker run test"
             }
         }
-
-        // stage("Deploy") {
-        //     steps {
-        //         echo "Deploy"
-        //     }
-        // }
 
         stage("Publish") {
             agent {
                 docker {
                     image "build:lastest"
+                    args "-u root"
                 }
             }
             steps {
-                echo "Publish"
+                sh "$JENKINS_HOME/.env"
+                sh 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc'
+                sh 'npm publish'
             }
         }
     }
