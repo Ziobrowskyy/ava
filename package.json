@@ -1,5 +1,5 @@
 {
-	"name": "ava",
+	"name": "@ziobrowskyy/ava",
 	"version": "4.2.0",
 	"description": "Node.js test runner that lets you develop with confidence.",
 	"license": "MIT",
@@ -25,7 +25,7 @@
 	},
 	"scripts": {
 		"cover": "c8 --report=none test-ava && c8 --report=none --no-clean tap && c8 report",
-		"test": "xo && tsd && npm run -s cover"
+		"test": "xo && tsd"
 	},
 	"files": [
 		"entrypoints",

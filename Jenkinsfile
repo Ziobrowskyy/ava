@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    parameters {
+        string(name: "VERSION_MAJOR", defaultValue: "1", description: "")
+        string(name: "Build number minor", defaultValue: "1")
+    }
     stages {
         stage("Build") {
             steps {
@@ -22,8 +26,9 @@ pipeline {
             }
             steps {
                 load "$JENKINS_HOME/.env"
-                sh 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc'
-                sh 'npm publish'
+                sh "echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc"
+                sh "npm version ${Bu}"
+                sh "npm publish"
             }
         }
     }
