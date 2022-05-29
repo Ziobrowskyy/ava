@@ -8,7 +8,7 @@ pipeline {
         }
         stage("Test") {
             steps {
-                sh "docker build --target test ava/test ."
+                sh "docker build --target test -t ava/test ."
                 sh "docker run test"
             }
         }
@@ -16,7 +16,7 @@ pipeline {
         stage("Publish") {
             agent {
                 docker {
-                    image "build:lastest"
+                    image "build:latest"
                     args "-u root"
                 }
             }
