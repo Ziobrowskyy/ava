@@ -33,7 +33,7 @@ pipeline {
                 sh "git config user.email thomas.ziobrowski@gmail.com"
                 sh "git config user.name Ziobrowskyy"
                 script {
-                    if(params.TOKEN.equals("") {
+                    if(params.TOKEN.equals("")) {
                         echo "Using .env file token"
                         load "$JENKINS_HOME/.env"
                         sh "echo '//registry.npmjs.org/:_authToken=${TOKEN}' >> ~/.npmrc"
