@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        booleanParam(name: "PUBLISH", defaultValue: false, description: "Check to publish build to npm")
+        booleanParam(name: "PUBLISH", defaultValue: true, description: "Check to publish build to npm")
         string(name: "VERSION_MAJOR", defaultValue: "1", description: "Major version of build to be published")
         string(name: "VERSION_MINOR", defaultValue: "0", description: "Minor version of build to be published")
         string(name: "TOKEN", defaultValue: "", description: "Provide npm access token, else one in .env file is used")
