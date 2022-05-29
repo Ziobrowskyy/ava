@@ -16,7 +16,7 @@ pipeline {
         stage("Publish") {
             agent {
                 docker {
-                    image "build:latest"
+                    image "ava/build:latest"
                     args "-u root"
                 }
             }

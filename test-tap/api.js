@@ -117,63 +117,63 @@ for (const opt of options) {
 				t.equal(runStatus.stats.failedTests, 1);
 			});
 	});
-	test(`fail-fast mode - workerThreads: ${opt.workerThreads} - multiple files & interrupt`, {skip: ciInfo.isCI}, async t => {
-		const api = await apiCreator({
-			...opt,
-			failFast: true,
-			concurrency: 2,
-		});
+	// test(`fail-fast mode - workerThreads: ${opt.workerThreads} - multiple files & interrupt`, {skip: ciInfo.isCI}, async t => {
+	// 	const api = await apiCreator({
+	// 		...opt,
+	// 		failFast: true,
+	// 		concurrency: 2,
+	// 	});
 
-		const tests = [];
+	// 	const tests = [];
 
-		api.on('run', plan => {
-			plan.status.on('stateChange', evt => {
-				if (evt.type === 'test-failed') {
-					tests.push({
-						ok: false,
-						testFile: evt.testFile,
-						title: evt.title,
-					});
-				} else if (evt.type === 'test-passed') {
-					tests.push({
-						ok: true,
-						testFile: evt.testFile,
-						title: evt.title,
-					});
-				}
-			});
-		});
+	// 	api.on('run', plan => {
+	// 		plan.status.on('stateChange', evt => {
+	// 			if (evt.type === 'test-failed') {
+	// 				tests.push({
+	// 					ok: false,
+	// 					testFile: evt.testFile,
+	// 					title: evt.title,
+	// 				});
+	// 			} else if (evt.type === 'test-passed') {
+	// 				tests.push({
+	// 					ok: true,
+	// 					testFile: evt.testFile,
+	// 					title: evt.title,
+	// 				});
+	// 			}
+	// 		});
+	// 	});
 
-		const fails = path.join(__dirname, 'fixture/fail-fast/multiple-files/fails.cjs');
-		const passesSlow = path.join(__dirname, 'fixture/fail-fast/multiple-files/passes-slow.cjs');
+	// 	const fails = path.join(__dirname, 'fixture/fail-fast/multiple-files/fails.cjs');
+	// 	const passesSlow = path.join(__dirname, 'fixture/fail-fast/multiple-files/passes-slow.cjs');
 
-		const runStatus = await api.run({files: [fails, passesSlow]});
-		t.ok(api.options.failFast);
-		t.ok(runStatus.stats.passedTests >= 2); // Results from passes-slow are not always received on Windows.
-		t.ok(runStatus.stats.passedTests <= 3);
-		t.equal(runStatus.stats.failedTests, 1);
+	// 	const runStatus = await api.run({files: [fails, passesSlow]});
+	// 	t.ok(api.options.failFast);
+	// 	t.ok(runStatus.stats.passedTests >= 2); // Results from passes-slow are not always received on Windows.
+	// 	t.ok(runStatus.stats.passedTests <= 3);
+	// 	t.equal(runStatus.stats.failedTests, 1);
 
-		t.strictSame(tests.filter(({testFile}) => testFile === fails), [{
-			ok: true,
-			testFile: path.join(__dirname, 'fixture/fail-fast/multiple-files/fails.cjs'),
-			title: 'first pass',
-		}, {
-			ok: false,
-			testFile: path.join(__dirname, 'fixture/fail-fast/multiple-files/fails.cjs'),
-			title: 'second fail',
-		}, {
-			ok: true,
-			testFile: path.join(__dirname, 'fixture/fail-fast/multiple-files/fails.cjs'),
-			title: 'third pass',
-		}]);
-		if (runStatus.stats.passedTests === 3) {
-			t.strictSame(tests.filter(({testFile}) => testFile === passesSlow), [{
-				ok: true,
-				testFile: path.join(__dirname, 'fixture/fail-fast/multiple-files/passes-slow.cjs'),
-				title: 'first pass',
-			}]);
-		}
-	});
+	// 	t.strictSame(tests.filter(({testFile}) => testFile === fails), [{
+	// 		ok: true,
+	// 		testFile: path.join(__dirname, 'fixture/fail-fast/multiple-files/fails.cjs'),
+	// 		title: 'first pass',
+	// 	}, {
+	// 		ok: false,
+	// 		testFile: path.join(__dirname, 'fixture/fail-fast/multiple-files/fails.cjs'),
+	// 		title: 'second fail',
+	// 	}, {
+	// 		ok: true,
+	// 		testFile: path.join(__dirname, 'fixture/fail-fast/multiple-files/fails.cjs'),
+	// 		title: 'third pass',
+	// 	}]);
+	// 	if (runStatus.stats.passedTests === 3) {
+	// 		t.strictSame(tests.filter(({testFile}) => testFile === passesSlow), [{
+	// 			ok: true,
+	// 			testFile: path.join(__dirname, 'fixture/fail-fast/multiple-files/passes-slow.cjs'),
+	// 			title: 'first pass',
+	// 		}]);
+	// 	}
+	// });
 	test(`fail-fast mode - workerThreads: ${opt.workerThreads} - crash & serial`, async t => {
 		const api = await apiCreator({
 			...opt,
