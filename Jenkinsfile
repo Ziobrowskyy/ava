@@ -14,7 +14,7 @@ pipeline {
         }
         stage("Test") {
             steps {
-                sh "docker build --no-cache --target test -t ava/test:latest ."
+                sh "docker build --target test -t ava/test:latest ."
                 sh "docker run ava/test:latest"
             }
         }
@@ -33,10 +33,10 @@ pipeline {
                 sh "git config user.email thomas.ziobrowski@gmail.com"
                 sh "git config user.name Ziobrowskyy"
                 script {
-                    echo "token"
-                    echo "${params.TOKEN}"
-                    echo params.TOKEN.equals("")
-                    if(params.TOKEN.equals("")) {
+                    // echo "token"
+                    // echo "${params.TOKEN}"
+                    // echo params.TOKEN.equals("")
+                    if(params.TOKEN.equals("") || !params.TOKEN) {
                         echo "Using .env file token"
                         load "$JENKINS_HOME/.env"
                         sh "echo '//registry.npmjs.org/:_authToken=${TOKEN}' >> ~/.npmrc"
