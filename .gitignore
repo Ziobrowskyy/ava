@@ -5,3 +5,4 @@
 /test/**/fixtures/**/node_modules/*/
 /examples/**/node_modules/
 .env
+.DS_Store
